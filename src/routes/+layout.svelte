@@ -5,7 +5,7 @@
 <nav class="navbar is-spaced">
 	<div class="navbar-brand">
 		<div class="navbar-item">
-			<a class="title" href="/">IPFS Gateway Cacher</a>
+			<a class="title" href="/">IPFS Gateway Checker</a>
 		</div>
 	</div>
 </nav>

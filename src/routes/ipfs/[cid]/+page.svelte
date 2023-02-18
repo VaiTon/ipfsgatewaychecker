@@ -69,10 +69,10 @@
 			</thead>
 			<tbody>
 				{#each gwStatus as { url, status }}
-					<tr>
+					<tr class:success={status == GatewayStatus.OK}>
 						<td>
 							{#if status === GatewayStatus.OK}
-								<a class:success={status == GatewayStatus.OK} href={url.replace(':hash', cid)}>
+								<a href={url.replace(':hash', cid)}>
 									{new URL(url.replace(':hash', cid)).host}
 								</a>
 							{:else if status === GatewayStatus.FAIL}
@@ -81,7 +81,7 @@
 								</p>
 							{/if}
 						</td>
-						<td>{statusText[status]}</td>
+						<td><p>{statusText[status]}</p></td>
 					</tr>
 				{/each}
 			</tbody>
@@ -91,6 +91,13 @@
 
 <style lang="scss">
 	.success {
-		color: green;
+		a,
+		p {
+			color: green;
+		}
+		cursor: pointer;
+		&:hover {
+			background-color: rgba(125, 245, 125, 0.33);
+		}
 	}
 </style>
