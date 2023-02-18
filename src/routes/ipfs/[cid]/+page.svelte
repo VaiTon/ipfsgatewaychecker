@@ -17,7 +17,6 @@
 	let gwStatus: { url: string; status: GatewayStatus }[] = [];
 	let gateways: string[] = [];
 	let cid: string;
-	let loading = true;
 
 	async function cacheOnGateway(gateway: string) {
 		const url = gateway.replace(':hash', cid);
@@ -39,7 +38,6 @@
 		const promises = gateways.map((gw) => cacheOnGateway(gw));
 
 		await Promise.all(promises);
-		loading = false;
 	}
 
 	onMount(async () => {
@@ -49,9 +47,7 @@
 		gateways = await res.json();
 		cid = $page.params.cid;
 
-		//await cacheCID();
-
-		loading = false;
+		await cacheCID();
 	});
 </script>
 
