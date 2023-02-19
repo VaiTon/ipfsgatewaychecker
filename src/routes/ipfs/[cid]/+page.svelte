@@ -2,19 +2,10 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 
-	enum GatewayStatus {
-		OK,
-		UNKNOWN,
-		FAIL
-	}
+	const GATEWAYS_URL =
+		'https://raw.githubusercontent.com/ipfs/public-gateway-checker/master/src/gateways.json';
 
-	const statusText = {
-		[GatewayStatus.OK]: 'OK',
-		[GatewayStatus.UNKNOWN]: 'Unknown',
-		[GatewayStatus.FAIL]: 'Fail'
-	};
-
-	let gwStatus: { url: string; status: GatewayStatus }[] = [];
+	let gwStatus: { url: string; ok: boolean }[] = [];
 	let gateways: string[] = [];
 	let cid: string;
 
@@ -23,15 +14,20 @@
 		try {
 			const res = await fetch(url);
 			if (res.ok) {
-				gwStatus.push({ url: gateway, status: GatewayStatus.OK });
+				gwStatus.push({ url: gateway, ok: true });
 			} else {
-				gwStatus.push({ url: gateway, status: GatewayStatus.FAIL });
+				gwStatus.push({ url: gateway, ok: false });
 			}
 		} catch (e) {
-			gwStatus.push({ url: gateway, status: GatewayStatus.FAIL });
+			gwStatus.push({ url: gateway, ok: false });
 		}
 		// Update status
-		gwStatus = gwStatus.sort((a, b) => a.status - b.status);
+		gwStatus = gwStatus.sort((a, b) => {
+			if (a.ok === b.ok) {
+				return 0;
+			}
+			return a.ok ? -1 : 1;
+		});
 	}
 
 	async function cacheCID() {
@@ -41,9 +37,7 @@
 	}
 
 	onMount(async () => {
-		const res = await fetch(
-			'https://raw.githubusercontent.com/ipfs/public-gateway-checker/master/src/gateways.json'
-		);
+		const res = await fetch(GATEWAYS_URL);
 		gateways = await res.json();
 		cid = $page.params.cid;
 
@@ -65,23 +59,23 @@
 				<tr>
 					<th>Gateway</th>
 					<th>Status</th>
+					<th>Link</th>
 				</tr>
 			</thead>
 			<tbody>
-				{#each gwStatus as { url, status }}
-					<tr class:success={status == GatewayStatus.OK}>
+				{#each gwStatus as { url, ok }}
+					<tr class:success={ok}>
 						<td>
-							{#if status === GatewayStatus.OK}
-								<a href={url.replace(':hash', cid)}>
-									{new URL(url.replace(':hash', cid)).host}
+							{new URL(url.replace(':hash', cid)).host}
+						</td>
+						<td><p class="status">{ok ? 'OK' : 'Fail'}</p></td>
+						<td>
+							{#if ok}
+								<a href={url.replace(':hash', cid)} target="_blank" rel="noopener noreferrer">
+									Download
 								</a>
-							{:else if status === GatewayStatus.FAIL}
-								<p>
-									{new URL(url.replace(':hash', cid)).host}
-								</p>
 							{/if}
 						</td>
-						<td><p>{statusText[status]}</p></td>
 					</tr>
 				{/each}
 			</tbody>
@@ -90,14 +84,7 @@
 {/if}
 
 <style lang="scss">
-	.success {
-		a,
-		p {
-			color: green;
-		}
-		cursor: pointer;
-		&:hover {
-			background-color: rgba(125, 245, 125, 0.33);
-		}
+	.success .status {
+		color: green;
 	}
 </style>
