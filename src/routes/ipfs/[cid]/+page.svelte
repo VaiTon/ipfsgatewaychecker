@@ -57,7 +57,7 @@
 	}
 
 	onMount(async () => {
-		if (cid.toV1().toString() !== cidStr) {
+		if (cid.version === 0) {
 			window.location.replace(`/ipfs/${cid.toV1().toString()}`);
 		}
 
@@ -73,9 +73,11 @@
 		<div class="column is-half">
 			<p class="title is-4">Gateways</p>
 			<p class="subtitle is-6">
-				CIDv0: <code>{cid.toV0().toString()}</code>
-				<br />
-				<strong>CIDv1: </strong><code>{cid.toV1().toString()}</code>
+				{#if cid.version === 0}
+					<strong>CIDv0: </strong>
+				{:else if cid.version === 1}
+					<strong>CIDv1: </strong>
+				{/if}<code>{cid}</code>
 			</p>
 			{#if gwStatus.length !== gateways.length}
 				<p>Tested {gwStatus.length} of {gateways.length} gateways...</p>
