@@ -9,12 +9,8 @@
 		</div>
 	</div>
 </nav>
-<main class="container">
-	<div class="columns is-centered">
-		<div class="column is-half">
-			<slot />
-		</div>
-	</div>
+<main class="container ">
+	<slot />
 </main>
 
 <style>
