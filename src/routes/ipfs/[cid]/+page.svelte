@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { CID } from 'multiformats/cid';
+	import recommended from './recommended.json';
 
 	const GATEWAYS_URL =
 		'https://raw.githubusercontent.com/ipfs/public-gateway-checker/master/src/gateways.json';
@@ -45,10 +46,25 @@
 		}
 		// Update status
 		gwStatus = gwStatus.sort((a, b) => {
-			if (a.ok === b.ok) {
-				return 0;
+			const hostA = new URL(a.url).host;
+			const hostB = new URL(b.url).host;
+
+			// Sort recommended gateways first
+			if (recommended.includes(hostA) && !recommended.includes(hostB)) {
+				return -1;
+			} else if (!recommended.includes(hostA) && recommended.includes(hostB)) {
+				return 1;
 			}
-			return a.ok ? -1 : 1;
+
+			// Then by ok
+			if (a.ok && !b.ok) {
+				return -1;
+			} else if (!a.ok && b.ok) {
+				return 1;
+			}
+
+			// Then by delay
+			return a.delay - b.delay;
 		});
 	}
 
@@ -107,7 +123,12 @@
 							{@const downloadUrl = getCidUrl(gwUrl)}
 							{@const host = new URL(downloadUrl).host}
 							<tr class:success={ok}>
-								<td title={host}> {ellipse(host, 30)} </td>
+								<td title={host}>
+									{#if recommended.includes(host)}
+										<span class="tag is-success">Recommended</span>
+									{/if}
+									{ellipse(host, 30)}
+								</td>
 								<td><p class="status">{ok ? 'OK' : 'Fail'}</p></td>
 								<td>
 									{#if ok}
