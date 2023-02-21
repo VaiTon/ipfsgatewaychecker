@@ -8,7 +8,7 @@
 
 	let cidStr = $page.params.cid;
 	$: cid = CID.parse(cidStr);
-	let gwStatus: { url: string; ok: boolean }[] = [];
+	let gwStatus: { url: string; ok: boolean; delay: number }[] = [];
 	let gateways: string[] = [];
 
 	let firstOkUrl: Response | null = null;
@@ -27,19 +27,21 @@
 	}
 
 	async function cacheOnGateway(gateway: string) {
+		const startTime = new Date().getTime();
 		const url = getCidUrl(gateway);
 		try {
 			const res = await fetch(url);
+			const endTime = new Date().getTime();
 			if (res.ok) {
-				gwStatus.push({ url: gateway, ok: true });
+				gwStatus.push({ url: gateway, ok: true, delay: endTime - startTime });
 				if (!firstOkUrl) {
 					firstOkUrl = res;
 				}
 			} else {
-				gwStatus.push({ url: gateway, ok: false });
+				gwStatus.push({ url: gateway, ok: false, delay: endTime - startTime });
 			}
 		} catch (e) {
-			gwStatus.push({ url: gateway, ok: false });
+			gwStatus.push({ url: gateway, ok: false, delay: 0 });
 		}
 		// Update status
 		gwStatus = gwStatus.sort((a, b) => {
@@ -97,15 +99,21 @@
 							<th>Gateway</th>
 							<th>Status</th>
 							<th />
+							<th />
 						</tr>
 					</thead>
 					<tbody>
-						{#each gwStatus as { url: gwUrl, ok }}
+						{#each gwStatus as { url: gwUrl, ok, delay }}
 							{@const downloadUrl = getCidUrl(gwUrl)}
 							{@const host = new URL(downloadUrl).host}
 							<tr class:success={ok}>
 								<td title={host}> {ellipse(host, 30)} </td>
 								<td><p class="status">{ok ? 'OK' : 'Fail'}</p></td>
+								<td>
+									{#if ok}
+										{delay} ms
+									{/if}
+								</td>
 								<td>
 									{#if ok}
 										<a href={downloadUrl} target="_blank" rel="noopener noreferrer"> Download </a>
