@@ -29,9 +29,12 @@
 
 	async function cacheOnGateway(gateway: string) {
 		const startTime = new Date().getTime();
+
 		const url = getCidUrl(gateway);
 		try {
-			const res = await fetch(url);
+			const res = await fetch(url, {
+				signal: AbortSignal.timeout(10000) // 10s
+			});
 			const endTime = new Date().getTime();
 			if (res.ok) {
 				gwStatus.push({ url: gateway, ok: true, delay: endTime - startTime });
@@ -50,9 +53,12 @@
 			const hostB = new URL(b.url).host;
 
 			// Sort recommended gateways first
-			if (recommended.includes(hostA) && !recommended.includes(hostB)) {
+			const includesA = recommended.includes(hostA);
+			const includesB = recommended.includes(hostB);
+
+			if (includesA && !includesB) {
 				return -1;
-			} else if (!recommended.includes(hostA) && recommended.includes(hostB)) {
+			} else if (!includesA && includesB) {
 				return 1;
 			}
 
@@ -86,99 +92,95 @@
 	});
 </script>
 
-<div class="columns centered">
+<div class="flex gap-4 justify-stretch mx-10 mb-10">
 	{#if gateways}
-		<div class="column is-half">
-			<p class="title is-4">Gateways</p>
-			<p class="subtitle is-6">
+		<div class="max-w-5xl w-full mx-auto">
+			<p class="text-xl font-bold">Gateways</p>
+
+			<p class="text-md">
 				{#if cid.version === 0}
 					<strong>CIDv0: </strong>
 				{:else if cid.version === 1}
 					<strong>CIDv1: </strong>
 				{/if}<code>{cid}</code>
 			</p>
-			{#if gwStatus.length !== gateways.length}
-				<p>Tested {gwStatus.length} of {gateways.length} gateways...</p>
-				<progress
-					class="progress is-small is-primary"
-					max={gateways.length}
-					value={gwStatus.length}
-				/>
-			{:else}
-				<p>Tested all {gateways.length} gateways!</p>
-			{/if}
-
-			<div class="block">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Gateway</th>
-							<th>Status</th>
-							<th />
-							<th />
-						</tr>
-					</thead>
-					<tbody>
-						{#each gwStatus as { url: gwUrl, ok, delay }}
-							{@const downloadUrl = getCidUrl(gwUrl)}
-							{@const host = new URL(downloadUrl).host}
-							<tr class:success={ok}>
-								<td title={host}>
-									{#if recommended.includes(host)}
-										<span class="tag is-success">Recommended</span>
-									{/if}
-									{ellipse(host, 30)}
-								</td>
-								<td><p class="status">{ok ? 'OK' : 'Fail'}</p></td>
-								<td>
-									{#if ok}
-										{delay} ms
-									{/if}
-								</td>
-								<td>
-									{#if ok}
-										<a href={downloadUrl} target="_blank" rel="noopener noreferrer"> Download </a>
-									{/if}
-								</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
+			<div class="my-3">
+				{#if gwStatus.length !== gateways.length}
+					<p>Tested {gwStatus.length} of {gateways.length} gateways...</p>
+					<progress
+						class="progress progress-primary max-w-xl"
+						max={gateways.length}
+						value={gwStatus.length}
+					/>
+				{:else}
+					<p>Tested all {gateways.length} gateways!</p>
+				{/if}
 			</div>
+
+			<table class="table table-zebra w-full">
+				<thead>
+					<tr>
+						<th>Gateway</th>
+						<th>Status</th>
+						<th>Delay</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each gwStatus as { url: gwUrl, ok, delay }}
+						{@const downloadUrl = getCidUrl(gwUrl)}
+						{@const host = new URL(downloadUrl).host}
+
+						<tr class:success={ok}>
+							<td title={host}>
+								{ellipse(host, 30)}
+							</td>
+							<td>
+								{#if ok && recommended.includes(host)}
+									<span class="badge badge-success">Recommended</span>
+								{:else if ok}
+									<span class="badge badge-info">OK</span>
+								{:else}
+									<span class="badge badge-error">Fail</span>
+								{/if}
+							</td>
+							<td>
+								{#if ok}
+									{delay} ms
+								{/if}
+							</td>
+							<td>
+								{#if ok}
+									<a
+										class="btn btn-secondary"
+										href={downloadUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										🔗 Link
+									</a>
+								{/if}
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
 		</div>
 	{/if}
 	{#if firstOkUrl}
-		<div class="column">
-			<p class="title is-4">Content</p>
-			<p class="subtitle is-6">
-				Type: <code>{firstOkUrlContentType}</code>
-			</p>
-			{#if firstOkUrlContentType === 'application/pdf' || firstOkUrlContentType === 'image/jpeg' || firstOkUrlContentType === 'image/png'}
-				<!-- svelte-ignore a11y-missing-attribute -->
-				<object
-					class:is-pdf={firstOkUrlContentType === 'application/pdf'}
-					data={firstOkUrl.url}
-					type={firstOkUrlContentType}
-				/>
-			{/if}
+		<div class="w-full">
+			<p class="text-xl font-bold">Content</p>
+			<code class="badge badge-secondary">{firstOkUrlContentType}</code>
+			<object
+				title="Content"
+				class="w-full h-full mt-5"
+				class:is-pdf={firstOkUrlContentType === 'application/pdf'}
+				data={firstOkUrl.url}
+				type={firstOkUrlContentType}
+			/>
 		</div>
 	{/if}
 </div>
 
 <style lang="scss">
-	.success .status {
-		color: green;
-	}
-
-	table {
-		width: 100%;
-	}
-
-	object {
-		width: 100%;
-
-		&.is-pdf {
-			height: 100%;
-		}
-	}
 </style>

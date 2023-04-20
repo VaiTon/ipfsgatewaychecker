@@ -1,20 +1,19 @@
 <script lang="ts">
-	import '../global.scss';
+	import '../app.css';
 </script>
 
-<nav class="navbar is-spaced">
-	<div class="navbar-brand">
-		<div class="navbar-item">
-			<a class="title" href="/">IPFS Gateway Checker</a>
-		</div>
+<nav class="navbar max-w-xl mx-auto">
+	<div class="navbar-center mx-auto">
+		<a class="text-xl font-bold" href="/">IPFS Gateway Checker</a>
 	</div>
 </nav>
-<main class="container ">
+
+<main class="container">
 	<slot />
 </main>
 
 <style>
-	nav {
-		justify-content: center;
+	body {
+		background-color: #f5f5f5;
 	}
 </style>

@@ -9,18 +9,15 @@
 </script>
 
 <main>
-	<div class="columns is-centered">
-		<div class="column is-half">
-			<div class="field">
-				<label class="label" for="hash">IPFS CID</label>
-				<div class="field has-addons">
-					<div class="control is-expanded">
-						<input class="input" id="hash" type="text" bind:value />
-					</div>
-					<div class="control">
-						<button class="button is-primary" on:click={cacheCID}>Cache</button>
-					</div>
-				</div>
+	<div class="mx-auto max-w-xl">
+		<div class="form-control">
+			<label class="label" for="hash"> <span class="label-text">IPFS CID</span></label>
+
+			<div class="input-group">
+				<input class="input w-full input-bordered" id="hash" type="text" bind:value />
+				<button class="btn btn-primary" on:click={cacheCID} disabled={value == null || value == ''}>
+					Cache
+				</button>
 			</div>
 		</div>
 	</div>
