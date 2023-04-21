@@ -49,23 +49,22 @@
 		}
 		// Update status
 		gwStatus = gwStatus.sort((a, b) => {
-			const hostA = new URL(a.url).host;
-			const hostB = new URL(b.url).host;
+			// Sort by ok
+			if (a.ok && !b.ok) {
+				return -1;
+			} else if (!a.ok && b.ok) {
+				return 1;
+			}
 
 			// Sort recommended gateways first
+			const hostB = new URL(b.url).host;
+			const hostA = new URL(a.url).host;
 			const includesA = recommended.includes(hostA);
 			const includesB = recommended.includes(hostB);
 
 			if (includesA && !includesB) {
 				return -1;
 			} else if (!includesA && includesB) {
-				return 1;
-			}
-
-			// Then by ok
-			if (a.ok && !b.ok) {
-				return -1;
-			} else if (!a.ok && b.ok) {
 				return 1;
 			}
 
@@ -106,14 +105,24 @@
 			</p>
 			<div class="my-3">
 				{#if gwStatus.length !== gateways.length}
-					<p>Tested {gwStatus.length} of {gateways.length} gateways...</p>
 					<progress
 						class="progress progress-primary max-w-xl"
 						max={gateways.length}
 						value={gwStatus.length}
 					/>
+					<span class="ml-2">{gwStatus.length} / {gateways.length}</span>
 				{:else}
-					<p>Tested all {gateways.length} gateways!</p>
+					<div class="alert">
+						<div>
+							<div>
+								<p class="font-bold">Tested all {gateways.length} gateways!</p>
+								<p class="text-sm">Refresh if every gateway failed.</p>
+							</div>
+						</div>
+						<div class="flex-none">
+							<button class="btn btn-primary btn-sm">Refresh</button>
+						</div>
+					</div>
 				{/if}
 			</div>
 
@@ -152,8 +161,9 @@
 							<td>
 								{#if ok}
 									<a
-										class="btn btn-secondary"
+										class="btn btn-secondary btn-sm"
 										href={downloadUrl}
+										class:btn-success={recommended.includes(host)}
 										target="_blank"
 										rel="noopener noreferrer"
 									>
@@ -173,8 +183,8 @@
 			<code class="badge badge-secondary">{firstOkUrlContentType}</code>
 			<object
 				title="Content"
-				class="w-full h-full mt-5"
-				class:is-pdf={firstOkUrlContentType === 'application/pdf'}
+				class="w-full mt-5"
+				class:h-full={firstOkUrlContentType === 'application/pdf'}
 				data={firstOkUrl.url}
 				type={firstOkUrlContentType}
 			/>
