@@ -1,93 +1,78 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { CID } from 'multiformats/cid';
-	import recommended from './recommended.json';
+	import type { PageData } from './$types';
+	import { ellipse, isLocalhost } from '$lib/utils';
+	import GatewayBadge from '$lib/components/GatewayBadge.svelte';
+	import ContentDisplay from '$lib/components/ContentDisplay.svelte';
 
-	const GATEWAYS_URL =
-		'https://raw.githubusercontent.com/ipfs/public-gateway-checker/master/src/gateways.json';
+	export let data: PageData;
 
-	let cidStr = $page.params.cid;
-	$: cid = CID.parse(cidStr);
-	let gwStatus: { url: string; ok: boolean; delay: number }[] = [];
-	let gateways: string[] = [];
+	let gateways = data.gateways;
+	let recommended = data.recommendedGateways;
+	let cid = data.cid;
 
-	let firstOkUrl: Response | null = null;
-
-	$: firstOkUrlContentType = firstOkUrl?.headers.get('content-type');
-
-	function getCidUrl(gateway: string) {
-		return gateway.replace(':hash', cidStr);
-	}
-
-	function ellipse(str: string, len: number) {
-		if (str.length <= len) {
-			return str;
+	let statusList: { url: URL; ok: boolean; delay: number }[] = [];
+	$: sortedStatusList = statusList.sort((a, b) => {
+		// Sort by ok
+		if (a.ok && !b.ok) {
+			return -1;
+		} else if (!a.ok && b.ok) {
+			return 1;
 		}
-		return str.slice(0, len) + '...';
-	}
 
-	async function cacheOnGateway(gateway: string) {
+		if (isLocalhost(a.url) && !isLocalhost(b.url)) {
+			return -1;
+		} else if (!isLocalhost(a.url) && isLocalhost(b.url)) {
+			return 1;
+		}
+
+		// Sort recommended gateways first
+		const hostB = new URL(b.url).host;
+		const hostA = new URL(a.url).host;
+		const includesA = recommended.includes(hostA);
+		const includesB = recommended.includes(hostB);
+
+		if (includesA && !includesB) {
+			return -1;
+		} else if (!includesA && includesB) {
+			return 1;
+		}
+
+		// Then by delay
+		return a.delay - b.delay;
+	});
+
+	let displayedResponse: Response | undefined = undefined;
+
+	async function cacheOnGateway(url: URL) {
 		const startTime = new Date().getTime();
 
-		const url = getCidUrl(gateway);
 		try {
 			const res = await fetch(url, {
 				signal: AbortSignal.timeout(10000) // 10s
 			});
 			const endTime = new Date().getTime();
 			if (res.ok) {
-				gwStatus.push({ url: gateway, ok: true, delay: endTime - startTime });
-				if (!firstOkUrl) {
-					firstOkUrl = res;
+				statusList = [...statusList, { url, ok: true, delay: endTime - startTime }];
+				if (!displayedResponse) {
+					displayedResponse = res;
 				}
 			} else {
-				gwStatus.push({ url: gateway, ok: false, delay: endTime - startTime });
+				statusList = [...statusList, { url, ok: false, delay: endTime - startTime }];
 			}
 		} catch (e) {
-			gwStatus.push({ url: gateway, ok: false, delay: 0 });
+			statusList = [...statusList, { url, ok: false, delay: 0 }];
 		}
-		// Update status
-		gwStatus = gwStatus.sort((a, b) => {
-			// Sort by ok
-			if (a.ok && !b.ok) {
-				return -1;
-			} else if (!a.ok && b.ok) {
-				return 1;
-			}
-
-			// Sort recommended gateways first
-			const hostB = new URL(b.url).host;
-			const hostA = new URL(a.url).host;
-			const includesA = recommended.includes(hostA);
-			const includesB = recommended.includes(hostB);
-
-			if (includesA && !includesB) {
-				return -1;
-			} else if (!includesA && includesB) {
-				return 1;
-			}
-
-			// Then by delay
-			return a.delay - b.delay;
-		});
 	}
 
 	async function cacheCID() {
-		const promises = gateways.map((gw) => cacheOnGateway(gw));
-
-		await Promise.all(promises);
+		displayedResponse = undefined;
+		statusList = [];
+		await Promise.all(gateways.map((gw) => cacheOnGateway(new URL(gw))));
 	}
 
 	onMount(async () => {
-		if (cid.version === 0) {
-			window.location.replace(`/ipfs/${cid.toV1().toString()}`);
-		}
-
-		const res = await fetch(GATEWAYS_URL);
-		gateways = await res.json();
-
-		await cacheCID();
+		cacheCID();
 	});
 </script>
 
@@ -104,13 +89,13 @@
 				{/if}<code>{cid}</code>
 			</p>
 			<div class="my-3">
-				{#if gwStatus.length !== gateways.length}
+				{#if sortedStatusList.length !== gateways.length}
 					<progress
 						class="progress progress-primary max-w-xl"
 						max={gateways.length}
-						value={gwStatus.length}
+						value={sortedStatusList.length}
 					/>
-					<span class="ml-2">{gwStatus.length} / {gateways.length}</span>
+					<span class="ml-2">{sortedStatusList.length} / {gateways.length}</span>
 				{:else}
 					<div class="alert">
 						<div>
@@ -120,7 +105,7 @@
 							</div>
 						</div>
 						<div class="flex-none">
-							<button class="btn btn-primary btn-sm">Refresh</button>
+							<button class="btn btn-primary btn-sm" on:click={() => cacheCID()}> Refresh </button>
 						</div>
 					</div>
 				{/if}
@@ -136,22 +121,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each gwStatus as { url: gwUrl, ok, delay }}
-						{@const downloadUrl = getCidUrl(gwUrl)}
-						{@const host = new URL(downloadUrl).host}
+					{#each sortedStatusList as { url: resUrl, ok, delay }}
+						{@const url = new URL(resUrl)}
 
 						<tr class:success={ok}>
-							<td title={host}>
-								{ellipse(host, 30)}
+							<td title={url.host}>
+								{ellipse(url.hostname, 30)}
 							</td>
 							<td>
-								{#if ok && recommended.includes(host)}
-									<span class="badge badge-success">Recommended</span>
-								{:else if ok}
-									<span class="badge badge-info">OK</span>
-								{:else}
-									<span class="badge badge-error">Fail</span>
-								{/if}
+								<GatewayBadge {ok} {url} recommendedHosts={recommended} />
 							</td>
 							<td>
 								{#if ok}
@@ -161,9 +139,8 @@
 							<td>
 								{#if ok}
 									<a
-										class="btn btn-secondary btn-sm"
-										href={downloadUrl}
-										class:btn-success={recommended.includes(host)}
+										class="btn btn-secondary btn-sm btn-ghost"
+										href={resUrl.toString()}
 										target="_blank"
 										rel="noopener noreferrer"
 									>
@@ -177,17 +154,13 @@
 			</table>
 		</div>
 	{/if}
-	{#if firstOkUrl}
+	{#if displayedResponse}
 		<div class="w-full">
 			<p class="text-xl font-bold">Content</p>
-			<code class="badge badge-secondary">{firstOkUrlContentType}</code>
-			<object
-				title="Content"
-				class="w-full mt-5"
-				class:h-full={firstOkUrlContentType === 'application/pdf'}
-				data={firstOkUrl.url}
-				type={firstOkUrlContentType}
-			/>
+			<code class="badge badge-secondary">
+				{displayedResponse.headers.get('Content-Type') || 'unknown'}
+			</code>
+			<ContentDisplay response={displayedResponse} />
 		</div>
 	{/if}
 </div>
