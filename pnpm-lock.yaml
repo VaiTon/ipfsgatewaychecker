@@ -1,6 +1,12 @@
 lockfileVersion: '6.0'
 
 devDependencies:
+  '@iconify/json':
+    specifier: ^2.2.54
+    version: 2.2.54
+  '@iconify/tailwind':
+    specifier: ^0.1.2
+    version: 0.1.2
   '@sveltejs/adapter-auto':
     specifier: ^2.0.0
     version: 2.0.0(@sveltejs/kit@1.15.7)
@@ -525,6 +531,23 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@iconify/json@2.2.54:
+    resolution: {integrity: sha512-FnvjAiqPqD5jKiN8XP7BOisBBou6rLU/DmHqI8jIIyxCOnDfWEtdgAZdgL66eFo88M3SUUGE/V0pbcOXtaPBAQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+      pathe: 1.1.0
+    dev: true
+
+  /@iconify/tailwind@0.1.2:
+    resolution: {integrity: sha512-pK9mT1v20x+37p7OhfoRxaMn19zdDBlnb/wSkdD2NIyByv3fLJqr3B1Id9CzxIzUVSVzSb6nXxuEP9BS/fKETA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/types@2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -1799,6 +1822,10 @@ packages:
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+    dev: true
+
+  /pathe@1.1.0:
+    resolution: {integrity: sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==}
     dev: true
 
   /picocolors@1.0.0:

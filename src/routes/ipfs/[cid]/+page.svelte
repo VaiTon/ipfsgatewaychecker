@@ -76,41 +76,41 @@
 	});
 </script>
 
-<div class="flex gap-4 justify-stretch mx-10 mb-10">
-	{#if gateways}
-		<div class="max-w-5xl w-full mx-auto">
-			<p class="text-xl font-bold">Gateways</p>
+<div class="gap-4 xl:flex justify-stretch mx-auto xl:mx-10 mb-10 w-min xl:w-auto">
+	<div class="lg:max-w-2xl max-w-xl">
+		<p class="text-xl font-bold">Gateways</p>
 
-			<p class="text-md">
-				{#if cid.version === 0}
-					<strong>CIDv0: </strong>
-				{:else if cid.version === 1}
-					<strong>CIDv1: </strong>
-				{/if}<code>{cid}</code>
-			</p>
-			<div class="my-3">
-				{#if sortedStatusList.length !== gateways.length}
-					<progress
-						class="progress progress-primary max-w-xl"
-						max={gateways.length}
-						value={sortedStatusList.length}
-					/>
-					<span class="ml-2">{sortedStatusList.length} / {gateways.length}</span>
-				{:else}
-					<div class="alert">
+		<p class="text-md sm:text-sm text-ellipsis overflow-hidden">
+			{#if cid.version === 0}
+				<strong>CIDv0: </strong>
+			{:else if cid.version === 1}
+				<strong>CIDv1: </strong>
+			{/if}<code>{cid}</code>
+		</p>
+		<div class="my-3">
+			{#if sortedStatusList.length !== gateways.length}
+				<progress
+					class="progress progress-primary max-w-xl"
+					max={gateways.length}
+					value={sortedStatusList.length}
+				/>
+				<span class="ml-2">{sortedStatusList.length} / {gateways.length}</span>
+			{:else}
+				<div class="alert">
+					<div>
 						<div>
-							<div>
-								<p class="font-bold">Tested all {gateways.length} gateways!</p>
-								<p class="text-sm">Refresh if every gateway failed.</p>
-							</div>
-						</div>
-						<div class="flex-none">
-							<button class="btn btn-primary btn-sm" on:click={() => cacheCID()}> Refresh </button>
+							<p class="font-bold">Tested all {gateways.length} gateways!</p>
+							<p class="text-sm">Refresh if every gateway failed.</p>
 						</div>
 					</div>
-				{/if}
-			</div>
+					<div class="flex-none">
+						<button class="btn btn-primary btn-sm" on:click={() => cacheCID()}> Refresh </button>
+					</div>
+				</div>
+			{/if}
+		</div>
 
+		<div class="overflow-x-hidden">
 			<table class="table table-zebra w-full">
 				<thead>
 					<tr>
@@ -125,8 +125,8 @@
 						{@const url = new URL(resUrl)}
 
 						<tr class:success={ok}>
-							<td title={url.host}>
-								{ellipse(url.hostname, 30)}
+							<td title={url.host} class="text-ellipsis overflow-hidden max-w-[15rem]">
+								{url.hostname}
 							</td>
 							<td>
 								<GatewayBadge {ok} {url} recommendedHosts={recommended} />
@@ -153,16 +153,17 @@
 				</tbody>
 			</table>
 		</div>
-	{/if}
-	{#if displayedResponse}
-		<div class="w-full">
-			<p class="text-xl font-bold">Content</p>
+	</div>
+
+	<div class="lg:max-w-5xl max-w-xl xl:flex flex-col w-full mx-auto hidden">
+		<p class="text-xl font-bold">Content</p>
+		{#if displayedResponse}
 			<code class="badge badge-secondary">
 				{displayedResponse.headers.get('Content-Type') || 'unknown'}
 			</code>
 			<ContentDisplay response={displayedResponse} />
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>
 
 <style lang="scss">

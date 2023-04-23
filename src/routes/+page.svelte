@@ -14,7 +14,17 @@
 			<label class="label" for="hash"> <span class="label-text">IPFS CID</span></label>
 
 			<div class="input-group">
-				<input class="input w-full input-bordered" id="hash" type="text" bind:value />
+				<input
+					class="input w-full input-bordered font-mono"
+					id="hash"
+					type="text"
+					bind:value
+					on:keydown={(e) => {
+						if (e.key === 'Enter') {
+							cacheCID();
+						}
+					}}
+				/>
 				<button class="btn btn-primary" on:click={cacheCID} disabled={value == null || value == ''}>
 					Cache
 				</button>
@@ -24,7 +34,4 @@
 </main>
 
 <style>
-	input {
-		font-family: monospace;
-	}
 </style>

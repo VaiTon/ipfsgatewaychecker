@@ -13,7 +13,7 @@
 <object
 	title="Content"
 	class="w-full mt-5"
-	class:h-full={isPdf || isHtml}
+	class:grow={isPdf || isHtml}
 	data={response.url}
 	type={displayedContentType || 'text/plain'}
 />
