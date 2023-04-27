@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { ellipse, isLocalhost } from '$lib/utils';
+	import { isLocalhost } from '$lib/utils';
 	import GatewayBadge from '$lib/components/GatewayBadge.svelte';
 	import ContentDisplay from '$lib/components/ContentDisplay.svelte';
 
