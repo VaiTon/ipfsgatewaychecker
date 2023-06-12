@@ -29,7 +29,7 @@
 		"multiformats": "^11.0.2",
 		"postcss": "^8.4.23",
 		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.0",
+		"prettier-plugin-svelte": "^2.10.1",
 		"sass": "^1.62.1",
 		"svelte": "^3.58.0",
 		"svelte-check": "^3.2.0",
