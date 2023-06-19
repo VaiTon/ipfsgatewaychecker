@@ -11,8 +11,8 @@ devDependencies:
     specifier: ^2.0.1
     version: 2.0.1(@sveltejs/kit@1.15.9)
   '@sveltejs/adapter-cloudflare':
-    specifier: ^2.2.1
-    version: 2.2.1(@sveltejs/kit@1.15.9)
+    specifier: ^2.3.0
+    version: 2.3.0(@sveltejs/kit@1.15.9)
   '@sveltejs/adapter-static':
     specifier: ^2.0.2
     version: 2.0.2(@sveltejs/kit@1.15.9)
@@ -425,8 +425,8 @@ packages:
       import-meta-resolve: 3.0.0
     dev: true
 
-  /@sveltejs/adapter-cloudflare@2.2.1(@sveltejs/kit@1.15.9):
-    resolution: {integrity: sha512-ZJvmBDDuWUuZB+ZSMnZUVO2P51EE5SZf9zKXy0w0dY1+2ko2w+4PF7oTw807fasjt4tR84VqU7hu0rQPf1lwpQ==}
+  /@sveltejs/adapter-cloudflare@2.3.0(@sveltejs/kit@1.15.9):
+    resolution: {integrity: sha512-4rUtQG1rfenLh3V+w8DSfmtv/l3pGBdxjvJ68oAVX7Lpm2yHUaKPmPVOA7EuQiP0BOB/TSZVmIF8c5SnTlrYXQ==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
