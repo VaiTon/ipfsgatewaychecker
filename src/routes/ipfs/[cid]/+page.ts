@@ -1,9 +1,6 @@
 import type { PageLoad } from './$types';
 import { CID } from 'multiformats/cid';
 import recommendedGateways from './recommended.json';
-import { error, redirect } from '@sveltejs/kit';
-import { page } from '$app/stores';
-import { get } from 'svelte/store';
 
 export const ssr = false;
 const GATEWAYS_URL =
@@ -21,13 +18,7 @@ const cidToUrl = (cid: CID, gateway: string, filename: string | null) => {
 };
 
 export const load = (async ({ fetch, params, url }) => {
-	let cid: CID;
-	try {
-		cid = CID.parse(params.cid);
-	} catch (e: any) {
-		throw error(400, e);
-	}
-
+	const cid = CID.parse(params.cid);
 	const filename = url.searchParams.get('filename');
 
 	const templates = [

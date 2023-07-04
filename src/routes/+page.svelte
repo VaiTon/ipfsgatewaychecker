@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { CID } from 'multiformats';
-	import { tick } from 'svelte';
 
 	let value: string;
 
@@ -25,14 +24,18 @@
 					cid = CID.parse(path.slice(6));
 					filename = url.searchParams.get('filename');
 				}
-			} catch (_) {}
+			} catch (_) {
+				// Ignore
+			}
 		}
 
 		if (cid == null) {
 			// CID
 			try {
 				cid = CID.parse(value);
-			} catch (_) {}
+			} catch (_) {
+				// Ignore
+			}
 		}
 
 		if (cid == null) {
@@ -48,8 +51,6 @@
 		goto(path);
 	}
 </script>
-
-
 
 <main>
 	<div class="mx-auto max-w-xl">
