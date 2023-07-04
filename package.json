@@ -37,8 +37,5 @@
 		"typescript": "^5.1.6",
 		"vite": "^4.3.9"
 	},
-	"type": "module",
-	"dependencies": {
-		"@sveltejs/adapter-vercel": "^3.0.1"
-	}
+	"type": "module"
 }
