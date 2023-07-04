@@ -76,6 +76,12 @@
 	});
 </script>
 
+<svelte:head>
+	<title>
+		IPFS GC | {data.filename ?? cid}
+	</title>
+</svelte:head>
+
 <div class="gap-4 xl:flex justify-stretch mx-auto xl:mx-10 mb-10 w-min xl:w-auto">
 	<div class="lg:max-w-2xl max-w-xl">
 		<p class="text-xl font-bold">Gateways</p>

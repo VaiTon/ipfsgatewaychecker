@@ -1,17 +1,60 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { CID } from 'multiformats';
+	import { tick } from 'svelte';
 
 	let value: string;
 
 	function cacheCID() {
-		goto(`/ipfs/${value}`);
+		let cid: CID | null = null;
+		let filename: string | null = null;
+
+		if (value.startsWith('ipfs://')) {
+			cid = CID.parse(value.slice(7));
+		}
+		if (cid == null && value.startsWith('ipfs/')) {
+			cid = CID.parse(value.slice(5));
+		}
+
+		if (cid == null) {
+			// HTTP URL
+			try {
+				const url = new URL(value);
+				const path = url.pathname;
+				if (path.startsWith('/ipfs/')) {
+					cid = CID.parse(path.slice(6));
+					filename = url.searchParams.get('filename');
+				}
+			} catch (_) {}
+		}
+
+		if (cid == null) {
+			// CID
+			try {
+				cid = CID.parse(value);
+			} catch (_) {}
+		}
+
+		if (cid == null) {
+			alert('Invalid CID or URL');
+			return;
+		}
+
+		let path = `/ipfs/${cid}`;
+		if (filename != null) {
+			path += `?filename=${filename}`;
+		}
+
+		goto(path);
 	}
 </script>
+
+
 
 <main>
 	<div class="mx-auto max-w-xl">
 		<div class="form-control">
-			<label class="label" for="hash"> <span class="label-text">IPFS CID</span></label>
+			<label class="label" for="hash"> <span class="label-text">IPFS CID or URL</span></label>
 
 			<div class="input-group">
 				<input

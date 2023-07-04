@@ -1,7 +1,9 @@
 import type { PageLoad } from './$types';
 import { CID } from 'multiformats/cid';
 import recommendedGateways from './recommended.json';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
+import { page } from '$app/stores';
+import { get } from 'svelte/store';
 
 export const ssr = false;
 const GATEWAYS_URL =
@@ -9,23 +11,35 @@ const GATEWAYS_URL =
 
 const LOCAL_GATEWAY_URL = 'http://localhost:8080/ipfs/:hash';
 
-const cidToUrl = (cid: CID, gateway: string) => gateway.replace(':hash', cid.toString());
-
-export const load = (async ({ fetch, params }) => {
-	const cid = CID.parse(params.cid);
-	if (cid.version === 0) {
-		throw redirect(308, `/ipfs/${cid.toV1().toString()}`);
+const cidToUrl = (cid: CID, gateway: string, filename: string | null) => {
+	let url = gateway.replace(':hash', cid.toString());
+	if (filename != null) {
+		url += `?filename=${filename}`;
 	}
+
+	return url;
+};
+
+export const load = (async ({ fetch, params, url }) => {
+	let cid: CID;
+	try {
+		cid = CID.parse(params.cid);
+	} catch (e: any) {
+		throw error(400, e);
+	}
+
+	const filename = url.searchParams.get('filename');
 
 	const templates = [
 		...((await (await fetch(GATEWAYS_URL)).json()) as string[]),
 		LOCAL_GATEWAY_URL
 	];
 
-	const gateways = templates.map((template) => cidToUrl(cid, template));
+	const gateways = templates.map((template) => cidToUrl(cid, template, filename));
 	return {
 		gateways,
 		cid,
+		filename,
 		recommendedGateways
 	};
 }) satisfies PageLoad;
