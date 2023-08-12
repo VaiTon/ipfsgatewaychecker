@@ -2,23 +2,23 @@
 	import { goto } from '$app/navigation';
 	import { CID } from 'multiformats';
 
-	let value: string;
+	let inputVal: string;
 
 	function cacheCID() {
 		let cid: CID | null = null;
 		let filename: string | null = null;
 
-		if (value.startsWith('ipfs://')) {
-			cid = CID.parse(value.slice(7));
+		if (inputVal.startsWith('ipfs://')) {
+			cid = CID.parse(inputVal.slice(7));
 		}
-		if (cid == null && value.startsWith('ipfs/')) {
-			cid = CID.parse(value.slice(5));
+		if (cid == null && inputVal.startsWith('ipfs/')) {
+			cid = CID.parse(inputVal.slice(5));
 		}
 
 		if (cid == null) {
 			// HTTP URL
 			try {
-				const url = new URL(value);
+				const url = new URL(inputVal);
 				const path = url.pathname;
 				if (path.startsWith('/ipfs/')) {
 					cid = CID.parse(path.slice(6));
@@ -32,7 +32,7 @@
 		if (cid == null) {
 			// CID
 			try {
-				cid = CID.parse(value);
+				cid = CID.parse(inputVal);
 			} catch (_) {
 				// Ignore
 			}
@@ -62,14 +62,18 @@
 					class="input w-full input-bordered font-mono"
 					id="hash"
 					type="text"
-					bind:value
+					bind:value={inputVal}
 					on:keydown={(e) => {
 						if (e.key === 'Enter') {
 							cacheCID();
 						}
 					}}
 				/>
-				<button class="btn btn-primary" on:click={cacheCID} disabled={value == null || value == ''}>
+				<button
+					class="btn btn-primary"
+					on:click={cacheCID}
+					disabled={inputVal == null || inputVal == ''}
+				>
 					Cache
 				</button>
 			</div>

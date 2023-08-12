@@ -11,6 +11,9 @@ devDependencies:
   '@iconify/tailwind':
     specifier: ^0.1.3
     version: 0.1.3
+  '@ipfs/public-gateway-checker':
+    specifier: github:ipfs/public-gateway-checker
+    version: github.com/ipfs/public-gateway-checker/0f23cef26abb5957c92e60861ced6605a271b243
   '@sveltejs/adapter-auto':
     specifier: ^2.1.0
     version: 2.1.0(@sveltejs/kit@1.22.1)
@@ -863,6 +866,10 @@ packages:
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+    dev: true
+
+  /countly-sdk-web@23.6.0:
+    resolution: {integrity: sha512-YoNzhpEGvrmj69WgXBgsbHlofYPrQZddmbOnNsvUK9VYnzSmNA5VV+Lf95B/xg2FUa14v/2eTnMNEbfbsw3Skg==}
     dev: true
 
   /cross-spawn@7.0.3:
@@ -2194,6 +2201,10 @@ packages:
       punycode: 2.3.0
     dev: true
 
+  /url-ponyfill@0.5.10:
+    resolution: {integrity: sha512-iEvb3b/PPOF00Zl5rg+4hWlDS3ks1+OBsPDn5sfv0LuWI/m82NDsjwMevqfaknAVK8lezbDt6DQunkmvTN6cYw==}
+    dev: true
+
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
@@ -2269,4 +2280,22 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  github.com/dutu/rate-limiter/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7:
+    resolution: {tarball: https://codeload.github.com/dutu/rate-limiter/tar.gz/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7}
+    name: '@dutu/rate-limiter'
+    version: 1.3.1
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: true
+
+  github.com/ipfs/public-gateway-checker/0f23cef26abb5957c92e60861ced6605a271b243:
+    resolution: {tarball: https://codeload.github.com/ipfs/public-gateway-checker/tar.gz/0f23cef26abb5957c92e60861ced6605a271b243}
+    name: '@ipfs/public-gateway-checker'
+    version: 1.6.1
+    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
+    dependencies:
+      '@dutu/rate-limiter': github.com/dutu/rate-limiter/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7
+      countly-sdk-web: 23.6.0
+      url-ponyfill: 0.5.10
     dev: true
