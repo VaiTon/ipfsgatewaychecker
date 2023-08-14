@@ -13,7 +13,7 @@ devDependencies:
     version: 0.1.3
   '@ipfs/public-gateway-checker':
     specifier: github:ipfs/public-gateway-checker
-    version: github.com/ipfs/public-gateway-checker/0f23cef26abb5957c92e60861ced6605a271b243
+    version: git/github.com+ipfs/public-gateway-checker/d4aaf863583ef3b44e03f1cd26334a5ad95ad119
   '@sveltejs/adapter-auto':
     specifier: ^2.1.0
     version: 2.1.0(@sveltejs/kit@1.22.5)
@@ -30,8 +30,8 @@ devDependencies:
     specifier: ^6.3.0
     version: 6.3.0(eslint@8.47.0)(typescript@5.1.6)
   autoprefixer:
-    specifier: ^10.4.14
-    version: 10.4.14(postcss@8.4.27)
+    specifier: ^10.4.15
+    version: 10.4.15(postcss@8.4.27)
   daisyui:
     specifier: ^3.5.1
     version: 3.5.1
@@ -739,15 +739,15 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /autoprefixer@10.4.14(postcss@8.4.27):
-    resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
+  /autoprefixer@10.4.15(postcss@8.4.27):
+    resolution: {integrity: sha512-KCuPB8ZCIqFdA4HwKXsvz7j6gvSDNhDP7WnUjBleRkKjPdvCmHFuQ77ocavI8FT6NdvlBnE2UFr2H4Mycn8Vew==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      browserslist: 4.21.9
-      caniuse-lite: 1.0.30001511
+      browserslist: 4.21.10
+      caniuse-lite: 1.0.30001520
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -784,15 +784,15 @@ packages:
       fill-range: 7.0.1
     dev: true
 
-  /browserslist@4.21.9:
-    resolution: {integrity: sha512-M0MFoZzbUrRU4KNfCrDLnvyE7gub+peetoTid3TBIqtunaDJyXlwhakT+/VkvSXcfIzFfK/nkCs4nmyTmxdNSg==}
+  /browserslist@4.21.10:
+    resolution: {integrity: sha512-bipEBdZfVH5/pwrvqc+Ub0kUPVfGUhlKxbvfD+z1BDnPEO/X98ruXGA1WP5ASpAFKan7Qr6j736IacbZQuAlKQ==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001511
-      electron-to-chromium: 1.4.447
-      node-releases: 2.0.12
-      update-browserslist-db: 1.0.11(browserslist@4.21.9)
+      caniuse-lite: 1.0.30001520
+      electron-to-chromium: 1.4.490
+      node-releases: 2.0.13
+      update-browserslist-db: 1.0.11(browserslist@4.21.10)
     dev: true
 
   /buffer-crc32@0.2.13:
@@ -816,8 +816,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /caniuse-lite@1.0.30001511:
-    resolution: {integrity: sha512-NaWPJawcoedlghN4P7bDNeADD7K+rZaY6V8ZcME7PkEZo/nfOg+lnrUgRWiKbNxcQ4/toFKSxnS4WdbyPZnKkw==}
+  /caniuse-lite@1.0.30001520:
+    resolution: {integrity: sha512-tahF5O9EiiTzwTUqAeFjIZbn4Dnqxzz7ktrgGlMYNLH43Ul26IgTMH/zvL3DG0lZxBYnlT04axvInszUsZULdA==}
     dev: true
 
   /chalk@4.1.2:
@@ -986,8 +986,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /electron-to-chromium@1.4.447:
-    resolution: {integrity: sha512-sxX0LXh+uL41hSJsujAN86PjhrV/6c79XmpY0TvjZStV6VxIgarf8SRkUoUTuYmFcZQTemsoqo8qXOGw5npWfw==}
+  /electron-to-chromium@1.4.490:
+    resolution: {integrity: sha512-6s7NVJz+sATdYnIwhdshx/N/9O6rvMxmhVoDSDFdj6iA45gHR8EQje70+RYsF4GeB+k0IeNSBnP7yG9ZXJFr7A==}
     dev: true
 
   /es6-promise@3.3.1:
@@ -1596,8 +1596,8 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /node-releases@2.0.12:
-    resolution: {integrity: sha512-QzsYKWhXTWx8h1kIvqfnC++o0pEmpRQA/aenALsL2F4pqNVr7YzcdMlDij5WBnwftRbJCNJL/O7zdKaxKPHqgQ==}
+  /node-releases@2.0.13:
+    resolution: {integrity: sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==}
     dev: true
 
   /normalize-path@3.0.0:
@@ -2261,13 +2261,13 @@ packages:
       busboy: 1.6.0
     dev: true
 
-  /update-browserslist-db@1.0.11(browserslist@4.21.9):
+  /update-browserslist-db@1.0.11(browserslist@4.21.10):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
-      browserslist: 4.21.9
+      browserslist: 4.21.10
       escalade: 3.1.1
       picocolors: 1.0.0
     dev: true
@@ -2364,20 +2364,20 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/dutu/rate-limiter/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7:
-    resolution: {tarball: https://codeload.github.com/dutu/rate-limiter/tar.gz/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7}
+  git/github.com+dutu/rate-limiter/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7:
+    resolution: {commit: bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7, repo: git@github.com:dutu/rate-limiter.git, type: git}
     name: '@dutu/rate-limiter'
     version: 1.3.1
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  github.com/ipfs/public-gateway-checker/0f23cef26abb5957c92e60861ced6605a271b243:
-    resolution: {tarball: https://codeload.github.com/ipfs/public-gateway-checker/tar.gz/0f23cef26abb5957c92e60861ced6605a271b243}
+  git/github.com+ipfs/public-gateway-checker/d4aaf863583ef3b44e03f1cd26334a5ad95ad119:
+    resolution: {commit: d4aaf863583ef3b44e03f1cd26334a5ad95ad119, repo: git@github.com:ipfs/public-gateway-checker.git, type: git}
     name: '@ipfs/public-gateway-checker'
     version: 1.6.1
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@dutu/rate-limiter': github.com/dutu/rate-limiter/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7
+      '@dutu/rate-limiter': git/github.com+dutu/rate-limiter/bbb0f61f9500d53c5cea3abc7b9a7afb733eaaa7
       countly-sdk-web: 23.6.0
       url-ponyfill: 0.5.10
     dev: true
