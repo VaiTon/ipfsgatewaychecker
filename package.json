@@ -19,7 +19,7 @@
 		"@ipfs/public-gateway-checker": "github:ipfs/public-gateway-checker",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.25.1",
+		"@sveltejs/kit": "^1.25.2",
 		"@typescript-eslint/eslint-plugin": "^6.7.3",
 		"@typescript-eslint/parser": "^6.7.3",
 		"autoprefixer": "^10.4.16",
