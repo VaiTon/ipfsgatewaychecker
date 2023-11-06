@@ -6,5 +6,5 @@ updates:
       interval: 'weekly'
     groups:
       minor:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
+        patterns: ['*']
+        update-types: ['minor', 'patch']
