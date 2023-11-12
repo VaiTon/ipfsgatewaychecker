@@ -54,7 +54,7 @@
 			const endTime = new Date().getTime();
 			if (res.ok) {
 				statusList = [...statusList, { url, ok: true, delay: endTime - startTime }];
-				if (!displayedResponse) {
+				if (displayedResponse == null) {
 					displayedResponse = res;
 				}
 			} else {
