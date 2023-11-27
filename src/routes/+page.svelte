@@ -57,9 +57,9 @@
 		<div class="form-control">
 			<label class="label" for="hash"> <span class="label-text">IPFS CID or URL</span></label>
 
-			<div class="input-group">
+			<div class="input-group join">
 				<input
-					class="input w-full input-bordered font-mono"
+					class="input w-full input-bordered font-mono join-item"
 					id="hash"
 					type="text"
 					bind:value={inputVal}
@@ -70,7 +70,7 @@
 					}}
 				/>
 				<button
-					class="btn btn-primary"
+					class="btn btn-primary join-item"
 					on:click={cacheCID}
 					disabled={inputVal == null || inputVal == ''}
 				>
