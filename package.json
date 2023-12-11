@@ -14,12 +14,12 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@iconify/json": "^2.2.154",
+		"@iconify/json": "^2.2.155",
 		"@iconify/tailwind": "^0.1.4",
 		"@ipfs/public-gateway-checker": "https://github.com/ipfs/public-gateway-checker",
 		"@sveltejs/adapter-auto": "^2.1.1",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.27.7",
+		"@sveltejs/kit": "^1.28.0",
 		"@typescript-eslint/eslint-plugin": "^6.13.2",
 		"@typescript-eslint/parser": "^6.13.2",
 		"autoprefixer": "^10.4.16",
