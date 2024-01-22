@@ -17,7 +17,7 @@ const cidToUrl = (cid: CID, gateway: string, filename: string | null) => {
 	return url;
 };
 
-export const load = (async ({ params, url }) => {
+export const load = (({ params, url }) => {
 	const cid = CID.parse(params.cid);
 	const filename = url.searchParams.get('filename');
 

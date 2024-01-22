@@ -2,9 +2,7 @@
 	import { isLocalhost } from '$lib/utils';
 
 	export let ok: boolean;
-
 	export let url: URL;
-
 	export let recommendedHosts: string[] = [];
 </script>
 
