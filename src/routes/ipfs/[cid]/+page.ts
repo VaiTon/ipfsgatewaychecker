@@ -14,12 +14,7 @@ const templatesToURLs = (cid: CID, gateway: string, filename: string | null) => 
 		newUrl += `?filename=${filename}`;
 	}
 
-	const prefixUrl = new URL(gateway);
-
-	prefixUrl.host = cid.toV1().toString() + '.ipfs.' + prefixUrl.host;
-	prefixUrl.pathname = '';
-
-	return [newUrl, prefixUrl.href];
+	return newUrl;
 };
 
 export const load = (({ params, url }) => {
