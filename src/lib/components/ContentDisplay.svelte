@@ -6,7 +6,7 @@
 
 <object
 	title="Content"
-	class="w-full mt-5"
+	class="w-full mt-5 h-screen"
 	data={response.url}
 	type={displayedContentType || 'text/plain'}
 />

@@ -16,7 +16,7 @@
 	"devDependencies": {
 		"@iconify/json": "^2.2.175",
 		"@iconify/tailwind": "^0.1.4",
-		"@ipfs/public-gateway-checker": "https://github.com/ipfs/public-gateway-checker",
+		"@ipfs/public-gateway-checker": "github:ipfs/public-gateway-checker",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",

@@ -49,8 +49,9 @@
 
 		try {
 			const res = await fetch(url, {
-				signal: AbortSignal.timeout(10000) // 10s
+				signal: AbortSignal.timeout(30_000)
 			});
+
 			const endTime = new Date().getTime();
 			if (res.ok) {
 				statusList = [...statusList, { url, ok: true, delay: endTime - startTime }];
@@ -143,16 +144,15 @@
 								{/if}
 							</td>
 							<td>
-								{#if ok}
-									<a
-										class="btn btn-secondary btn-sm btn-ghost"
-										href={resUrl.toString()}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										🔗 Link
-									</a>
-								{/if}
+								<a
+									class="btn btn-outline"
+									href={resUrl.toString()}
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Link to {url.host}"
+								>
+									🔗
+								</a>
 							</td>
 						</tr>
 					{/each}
