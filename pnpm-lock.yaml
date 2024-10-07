@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@iconify/json':
-    specifier: ^2.2.256
-    version: 2.2.256
+    specifier: ^2.2.257
+    version: 2.2.257
   '@iconify/tailwind':
     specifier: ^0.1.4
     version: 0.1.4
@@ -16,13 +16,13 @@ devDependencies:
     version: github.com/ipfs/public-gateway-checker/0d7d927a40f154f8c110d13be2403a8309f5c6bd
   '@sveltejs/adapter-auto':
     specifier: ^3.2.5
-    version: 3.2.5(@sveltejs/kit@2.6.1)
+    version: 3.2.5(@sveltejs/kit@2.6.2)
   '@sveltejs/adapter-static':
     specifier: ^3.0.5
-    version: 3.0.5(@sveltejs/kit@2.6.1)
+    version: 3.0.5(@sveltejs/kit@2.6.2)
   '@sveltejs/kit':
-    specifier: ^2.6.1
-    version: 2.6.1(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8)
+    specifier: ^2.6.2
+    version: 2.6.2(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.1.2
     version: 3.1.2(svelte@4.2.19)(vite@5.4.8)
@@ -36,8 +36,8 @@ devDependencies:
     specifier: ^10.4.20
     version: 10.4.20(postcss@8.4.47)
   daisyui:
-    specifier: ^4.12.11
-    version: 4.12.11(postcss@8.4.47)
+    specifier: ^4.12.12
+    version: 4.12.12(postcss@8.4.47)
   eslint:
     specifier: ^8.57.0
     version: 8.57.0
@@ -365,8 +365,8 @@ packages:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
 
-  /@iconify/json@2.2.256:
-    resolution: {integrity: sha512-u2RwfBUuDE3A8qx3vnXdcJMtirHc9QrRRULfGY6Il6/K76Odfrm4yVqS/fYIh+wXwWl/fZdAZEozqxpZftfnIQ==}
+  /@iconify/json@2.2.257:
+    resolution: {integrity: sha512-IqjXD7BrtORxEK1eRq77550zMztRnwTn8Qyid+WuGspYP+wn5PUEoNPvF3bOJkWiq14QqPphi339nEKuomgR2A==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -584,25 +584,25 @@ packages:
     dev: true
     optional: true
 
-  /@sveltejs/adapter-auto@3.2.5(@sveltejs/kit@2.6.1):
+  /@sveltejs/adapter-auto@3.2.5(@sveltejs/kit@2.6.2):
     resolution: {integrity: sha512-27LR+uKccZ62lgq4N/hvyU2G+hTP9fxWEAfnZcl70HnyfAjMSsGk1z/SjAPXNCD1mVJIE7IFu3TQ8cQ/UH3c0A==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.6.1(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8)
+      '@sveltejs/kit': 2.6.2(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8)
       import-meta-resolve: 4.1.0
     dev: true
 
-  /@sveltejs/adapter-static@3.0.5(@sveltejs/kit@2.6.1):
+  /@sveltejs/adapter-static@3.0.5(@sveltejs/kit@2.6.2):
     resolution: {integrity: sha512-kFJR7RxeB6FBvrKZWAEzIALatgy11ISaaZbcPup8JdWUdrmmfUHHTJ738YHJTEfnCiiXi6aX8Q6ePY7tnSMD6Q==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.6.1(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8)
+      '@sveltejs/kit': 2.6.2(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8)
     dev: true
 
-  /@sveltejs/kit@2.6.1(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8):
-    resolution: {integrity: sha512-QFlch3GPGZYidYhdRAub0fONw8UTguPICFHUSPxNkA/jdlU1p6C6yqq19J1QWdxIHS2El/ycDCGrHb3EAiMNqg==}
+  /@sveltejs/kit@2.6.2(@sveltejs/vite-plugin-svelte@3.1.2)(svelte@4.2.19)(vite@5.4.8):
+    resolution: {integrity: sha512-ruogrSPXjckn5poUiZU8VYNCSPHq66SFR1AATvOikQxtP6LNI4niAZVX/AWZRe/EPDG3oY2DNJ9c5z7u0t2NAQ==}
     engines: {node: '>=18.13'}
     hasBin: true
     requiresBuild: true
@@ -613,7 +613,7 @@ packages:
     dependencies:
       '@sveltejs/vite-plugin-svelte': 3.1.2(svelte@4.2.19)(vite@5.4.8)
       '@types/cookie': 0.6.0
-      cookie: 0.6.0
+      cookie: 0.7.2
       devalue: 5.1.1
       esm-env: 1.0.0
       import-meta-resolve: 4.1.0
@@ -1040,8 +1040,8 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
-  /cookie@0.6.0:
-    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
+  /cookie@0.7.2:
+    resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -1084,8 +1084,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /daisyui@4.12.11(postcss@8.4.47):
-    resolution: {integrity: sha512-D9OJTlnU1ATiDsKkw5/TB0997Hm73zu9SFeUTthDtKd06OEJQlOLoYrGXlP2YhHZDW4VAcQnmhEphTgPFUYqSw==}
+  /daisyui@4.12.12(postcss@8.4.47):
+    resolution: {integrity: sha512-xmCZ4piuWOjhNyB0VDKczB5vKFCipTA7UxaZNOzCz6cT8kvWgv5BDtUo+Hk9gOFufByOlfuBdzLpfhY5GsebTQ==}
     engines: {node: '>=16.9.0'}
     dependencies:
       css-selector-tokenizer: 0.8.0
