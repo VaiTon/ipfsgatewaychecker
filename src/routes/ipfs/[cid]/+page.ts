@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 import { CID } from 'multiformats/cid';
 import recommendedGateways from './recommended.json';
 
-import gatewaysTemplates from '@ipfs/public-gateway-checker/src/gateways';
+import gatewaysTemplates from '$lib/gateways.json';
 
 export const ssr = false;
 
@@ -17,7 +17,7 @@ const templatesToURLs = (cid: CID, gateway: string, filename: string | null) => 
 	return newUrl;
 };
 
-export const load = (({ params, url }) => {
+export const load: PageLoad = ({ params, url }) => {
 	const cid = CID.parse(params.cid);
 	const filename = url.searchParams.get('filename');
 
@@ -31,4 +31,4 @@ export const load = (({ params, url }) => {
 		filename,
 		recommendedGateways
 	};
-}) satisfies PageLoad;
+};

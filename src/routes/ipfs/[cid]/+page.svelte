@@ -4,51 +4,59 @@
 	import { isLocalhost } from '$lib/utils';
 	import GatewayBadge from '$lib/components/GatewayBadge.svelte';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
-	let gateways = data.gateways;
-	let recommended = data.recommendedGateways;
-	let cid = data.cid;
+	let { gateways, recommendedGateways: recommended, cid } = $derived(data);
 
-	let statusList: { url: URL; ok: boolean; delay: number }[] = [];
-	$: sortedStatusList = statusList.sort((a, b) => {
-		// Sort by ok
-		if (a.ok && !b.ok) {
-			return -1;
-		} else if (!a.ok && b.ok) {
-			return 1;
-		}
+	let statusList = $state<{ url: URL; ok: boolean; delay: number }[]>([]);
 
-		if (isLocalhost(a.url) && !isLocalhost(b.url)) {
-			return -1;
-		} else if (!isLocalhost(a.url) && isLocalhost(b.url)) {
-			return 1;
-		}
+	let sortedStatusList = $derived(
+		statusList.toSorted((a, b) => {
+			// Sort by ok
+			if (a.ok && !b.ok) {
+				return -1;
+			} else if (!a.ok && b.ok) {
+				return 1;
+			}
 
-		// Sort recommended gateways first
-		const hostB = new URL(b.url).host;
-		const hostA = new URL(a.url).host;
-		const includesA = recommended.includes(hostA);
-		const includesB = recommended.includes(hostB);
+			if (isLocalhost(a.url) && !isLocalhost(b.url)) {
+				return -1;
+			} else if (!isLocalhost(a.url) && isLocalhost(b.url)) {
+				return 1;
+			}
 
-		if (includesA && !includesB) {
-			return -1;
-		} else if (!includesA && includesB) {
-			return 1;
-		}
+			// Sort recommended gateways first
+			const hostB = new URL(b.url).host;
+			const hostA = new URL(a.url).host;
+			const includesA = recommended.includes(hostA);
+			const includesB = recommended.includes(hostB);
 
-		// Then by delay
-		return a.delay - b.delay;
-	});
+			if (includesA && !includesB) {
+				return -1;
+			} else if (!includesA && includesB) {
+				return 1;
+			}
 
-	let displayedResponse: Response | undefined = undefined;
+			// Then by delay
+			return a.delay - b.delay;
+		})
+	);
+
+	let displayedResponse = $state<Response | undefined>(undefined);
+
+	function stripCID(url: string): string {
+		// Remove the CID prefix if it exists
+		return url.replace(/^(https?:\/\/)?([a-z0-9]+\.)?ipfs\./, '');
+	}
 
 	async function cacheOnGateway(url: URL) {
 		const startTime = new Date().getTime();
 
 		try {
 			const res = await fetch(url, {
-				signal: AbortSignal.timeout(30_000)
+				signal: AbortSignal.timeout(30_000),
+				credentials: 'omit',
+				mode: 'no-cors'
 			});
 
 			const endTime = new Date().getTime();
@@ -83,9 +91,7 @@
 </script>
 
 <svelte:head>
-	<title>
-		IPFS GC | {data.filename ?? cid}
-	</title>
+	<title>IPFS GC | {data.filename ?? cid}</title>
 </svelte:head>
 
 <div class="gap-4 justify-stretch mx-10 mb-10">
@@ -105,7 +111,7 @@
 				class="progress progress-success"
 				max={gateways.length}
 				value={sortedStatusList.length}
-			/>
+			></progress>
 			<span class="ml-2">{sortedStatusList.length} / {gateways.length}</span>
 		{:else}
 			<div class="alert">
@@ -116,7 +122,7 @@
 					</div>
 				</div>
 				<div class="flex-none">
-					<button class="btn btn-primary btn-sm" on:click={() => cacheCID()}> Refresh </button>
+					<button class="btn btn-primary btn-sm" onclick={() => cacheCID()}> Refresh </button>
 				</div>
 			</div>
 		{/if}
@@ -129,7 +135,7 @@
 					<th>Gateway</th>
 					<th>Status</th>
 					<th>Delay</th>
-					<th />
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -137,8 +143,8 @@
 					{@const url = new URL(resUrl)}
 
 					<tr class:success={ok}>
-						<td title={url.host} class="text-ellipsis overflow-hidden max-w-[15rem]">
-							{url.hostname}
+						<td title={url.host} class="text-ellipsis overflow-hidden max-w-60">
+							{stripCID(url.hostname)}
 						</td>
 						<td>
 							<GatewayBadge {ok} {url} recommendedHosts={recommended} />

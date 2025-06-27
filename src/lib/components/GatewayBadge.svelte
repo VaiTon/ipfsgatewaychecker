@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { isLocalhost } from '$lib/utils';
 
-	export let ok: boolean;
-	export let url: URL;
-	export let recommendedHosts: string[] = [];
+	let { ok, url, recommendedHosts = [] }: { ok: boolean; url: URL; recommendedHosts?: string[] } = $props();
 </script>
 
 {#if !ok}
