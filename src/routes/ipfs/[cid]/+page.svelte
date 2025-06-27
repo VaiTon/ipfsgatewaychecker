@@ -74,7 +74,7 @@
 			} else {
 				statusList = [...statusList, { url, ok: false, delay: endTime - startTime }];
 			}
-		} catch (e) {
+		} catch {
 			statusList = [...statusList, { url, ok: false, delay: 0 }];
 		}
 	}
@@ -139,7 +139,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each sortedStatusList as { url: resUrl, ok, delay }}
+				{#each sortedStatusList as { url: resUrl, ok, delay } (resUrl.href)}
 					{@const url = new URL(resUrl)}
 
 					<tr class:success={ok}>

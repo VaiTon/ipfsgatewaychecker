@@ -24,7 +24,7 @@
 					cid = CID.parse(path.slice(6));
 					filename = url.searchParams.get('filename');
 				}
-			} catch (_) {
+			} catch {
 				// Ignore
 			}
 		}
@@ -33,7 +33,7 @@
 			// CID
 			try {
 				cid = CID.parse(inputVal);
-			} catch (_) {
+			} catch {
 				// Ignore
 			}
 		}
