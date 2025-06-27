@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { isLocalhost } from '$lib/utils';
 
-	let { ok, url, recommendedHosts = [] }: { ok: boolean; url: URL; recommendedHosts?: string[] } = $props();
+	let {
+		ok,
+		url,
+		recommendedHosts = []
+	}: { ok: boolean; url: URL; recommendedHosts?: string[] } = $props();
 </script>
 
 {#if !ok}
