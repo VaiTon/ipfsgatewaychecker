@@ -1,13 +1,60 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Test and compare IPFS gateway performance. Check which gateways serve your content fastest with real-time testing."
+		/>
+		<meta
+			name="keywords"
+			content="IPFS, gateway, performance, speed test, decentralized storage, blockchain"
+		/>
+		<meta name="author" content="IPFS Gateway Checker" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="IPFS Gateway Performance Checker" />
+		<meta
+			property="og:description"
+			content="Test and compare the performance of different IPFS gateways in real-time."
+		/>
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content="IPFS Gateway Performance Checker" />
+		<meta
+			property="twitter:description"
+			content="Test and compare the performance of different IPFS gateways in real-time."
+		/>
+
+		<!-- Theme and appearance -->
+		<meta name="theme-color" content="#3b82f6" />
+		<meta name="color-scheme" content="light dark" />
+
+		<!-- Performance optimizations -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="dns-prefetch" href="//ipfs.io" />
+
 		%sveltekit.head%
 	</head>
 
-	<body data-sveltekit-preload-data="hover">
+	<body data-sveltekit-preload-data="hover" class="transition-colors duration-300">
 		<div style="display: contents">%sveltekit.body%</div>
+
+		<!-- Theme detection script -->
+		<script>
+			// Detect system theme preference
+			if (
+				localStorage.theme === 'dark' ||
+				(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+			) {
+				document.documentElement.setAttribute('data-theme', 'dark');
+			} else {
+				document.documentElement.setAttribute('data-theme', 'light');
+			}
+		</script>
 	</body>
 </html>

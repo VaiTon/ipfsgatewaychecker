@@ -4,36 +4,47 @@
 	const GITHUB_URL = 'https://github.com/VaiTon/ipfsgatewaychecker';
 </script>
 
-<div class="flex flex-col min-h-screen">
-	<nav class="navbar max-w-xl mx-auto">
-		<div class="navbar-start" />
-		<div class="navbar-center mx-auto">
-			<a class="btn btn-ghost normal-case text-xl font-bold" href="/">IPFS Gateway Checker</a>
+<div class="min-h-screen bg-base-300">
+	<!-- Navigation -->
+	<div class="navbar bg-base-100 border-b border-base-300 shadow-sm">
+		<div class="navbar-start">
 		</div>
-		<div class="navbar-end">
-			<a class="btn btn-ghost" href={GITHUB_URL}>
-				<span class="icon-[fa6-brands--github] w-6 h-6" />
+		<div class="navbar-center">
+			<a class="btn btn-ghost text-xl font-bold" href="/">
+				<span class="icon-[heroicons--cube] w-6 h-6 mr-2 text-primary"></span>
+				IPFS Gateway Checker
 			</a>
 		</div>
-	</nav>
+		<div class="navbar-end">
+			<a class="btn btn-ghost" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+				<span class="icon-[fa6-brands--github] w-5 h-5"></span>
+				<span class="hidden sm:inline ml-2">GitHub</span>
+			</a>
+		</div>
+	</div>
 
-	<main class="grow w-full mx-auto">
+	<!-- Main Content -->
+	<main class="min-h-screen">
 		<slot />
 	</main>
 
-	<footer class="footer bg-neutral text-neutral-content p-6 mt-10 justify-center">
-		<div>
-			<p class="text-md font-light tracking-wide">
+	<!-- Footer -->
+	<footer class="footer footer-center bg-base-200 border-t border-base-300 text-base-content p-8">
+		<aside>
+			<div class="flex items-center gap-4 text-sm">
 				<span>Built with</span>
-				<a href="https://svelte.dev">
-					<span class="icon-[skill-icons--svelte] align-sub text-lg" />
+				<a href="https://svelte.dev" class="link link-hover">
+					<span class="icon-[skill-icons--svelte] text-lg"></span>
+					<span class="hidden sm:inline ml-1">Svelte</span>
 				</a>
 				<span>and</span>
-				<a href="https://ipfs.io">
-					<span class="icon-[skill-icons--ipfs-dark] align-sub text-lg" />
+				<a href="https://ipfs.io" class="link link-hover">
+					<span class="icon-[skill-icons--ipfs-dark] text-lg"></span>
+					<span class="hidden sm:inline ml-1">IPFS</span>
 				</a>
-			</p>
-		</div>
+			</div>
+			<p class="text-xs opacity-50 mt-2">Open source tool for testing IPFS gateway performance</p>
+		</aside>
 	</footer>
 </div>
 
