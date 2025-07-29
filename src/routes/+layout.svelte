@@ -7,8 +7,7 @@
 <div class="min-h-screen bg-base-300">
 	<!-- Navigation -->
 	<div class="navbar bg-base-100 border-b border-base-300 shadow-sm">
-		<div class="navbar-start">
-		</div>
+		<div class="navbar-start"></div>
 		<div class="navbar-center">
 			<a class="btn btn-ghost text-xl font-bold" href="/">
 				<span class="icon-[heroicons--cube] w-6 h-6 mr-2 text-primary"></span>

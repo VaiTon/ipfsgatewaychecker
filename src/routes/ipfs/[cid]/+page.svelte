@@ -8,7 +8,9 @@
 
 	let { gateways, cid } = $derived(data);
 
-	let statusList = $state<{ url: URL; ok: boolean; delay: number; format: 'path' | 'subdomain' }[]>([]);
+	let statusList = $state<{ url: URL; ok: boolean; delay: number; format: 'path' | 'subdomain' }[]>(
+		[]
+	);
 
 	let sortedStatusList = $derived(
 		statusList.toSorted((a, b) => {
@@ -24,8 +26,6 @@
 			} else if (!isLocalhost(a.url) && isLocalhost(b.url)) {
 				return 1;
 			}
-
-
 
 			// Prioritize subdomain format over path format
 			if (a.format === 'subdomain' && b.format === 'path') {
@@ -130,38 +130,43 @@
 <div class="min-h-screen bg-base-300 relative overflow-hidden">
 	<!-- Tech Background Pattern -->
 	<div class="absolute inset-0 opacity-5">
-		<div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 20px 20px;"></div>
+		<div
+			class="absolute inset-0"
+			style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 20px 20px;"
+		></div>
 	</div>
 
 	<div class="relative z-10 container mx-auto px-4 py-8">
-	<!-- Header Card -->
-	<div class="card bg-base-100 shadow-xl mb-8">
-		<div class="card-body">
-			<h1 class="card-title text-2xl">Gateway Performance Test</h1>
-			<p class="text-base-content/70">Testing {gateways.length} IPFS gateways for your content</p>
-		</div>
-	</div>
-
-	<!-- Header Section -->
-	<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
-		<div>
-			<div class="flex items-center gap-2 mb-2">
-				{#if cid.version === 0}
-					<div class="badge badge-outline">CIDv0</div>
-				{:else if cid.version === 1}
-					<div class="badge badge-outline">CIDv1</div>
-				{/if}
-				{#if data.filename}
-					<div class="badge badge-secondary">{data.filename}</div>
-				{/if}
+		<!-- Header Card -->
+		<div class="card bg-base-100 shadow-xl mb-8">
+			<div class="card-body">
+				<h1 class="card-title text-2xl">Gateway Performance Test</h1>
+				<p class="text-base-content/70">Testing {gateways.length} IPFS gateways for your content</p>
 			</div>
-			<code class="text-sm bg-base-200 px-3 py-2 rounded font-mono break-all">{cid.toString()}</code>
 		</div>
-		<button class="btn btn-outline" onclick={() => cacheCID()}>
-			<span class="icon-[heroicons--arrow-path] w-4 h-4"></span>
-			Refresh Test
-		</button>
-	</div>
+
+		<!-- Header Section -->
+		<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
+			<div>
+				<div class="flex items-center gap-2 mb-2">
+					{#if cid.version === 0}
+						<div class="badge badge-outline">CIDv0</div>
+					{:else if cid.version === 1}
+						<div class="badge badge-outline">CIDv1</div>
+					{/if}
+					{#if data.filename}
+						<div class="badge badge-secondary">{data.filename}</div>
+					{/if}
+				</div>
+				<code class="text-sm bg-base-200 px-3 py-2 rounded font-mono break-all"
+					>{cid.toString()}</code
+				>
+			</div>
+			<button class="btn btn-outline" onclick={() => cacheCID()}>
+				<span class="icon-[heroicons--arrow-path] w-4 h-4"></span>
+				Refresh Test
+			</button>
+		</div>
 
 		<!-- CID Information Section -->
 		<div class="card bg-base-100 shadow-xl border border-base-300 mb-8">
@@ -192,7 +197,8 @@
 						<span class="text-base-content/60">Hash:</span>
 						<span class="font-mono text-secondary">{cid.multihash.code}</span>
 						<span class="text-xs text-base-content/50">
-							({#if cid.multihash.code === 0x12}SHA-256{:else if cid.multihash.code === 0x13}SHA-512{:else if cid.multihash.code === 0x1b}BLAKE2b-256{:else}Hash-{cid.multihash.code}{/if})
+							({#if cid.multihash.code === 0x12}SHA-256{:else if cid.multihash.code === 0x13}SHA-512{:else if cid.multihash.code === 0x1b}BLAKE2b-256{:else}Hash-{cid
+									.multihash.code}{/if})
 						</span>
 					</div>
 					<div class="flex items-center gap-2">
@@ -314,23 +320,32 @@
 									<td class="py-4">
 										<div class="flex items-center gap-3">
 											<div class="indicator">
-												<div class="w-10 h-10 rounded-full bg-base-300 flex items-center justify-center border-2 border-base-400">
+												<div
+													class="w-10 h-10 rounded-full bg-base-300 flex items-center justify-center border-2 border-base-400"
+												>
 													{#if ok}
 														<span class="icon-[heroicons--globe-alt] w-5 h-5 text-success"></span>
 													{:else}
-														<span class="icon-[heroicons--exclamation-triangle] w-5 h-5 text-error"></span>
+														<span class="icon-[heroicons--exclamation-triangle] w-5 h-5 text-error"
+														></span>
 													{/if}
 												</div>
 												{#if ok && delay < 1000}
 													<span class="indicator-item indicator-top indicator-end">
-														<div class="w-3 h-3 bg-success rounded-full border-2 border-base-100"></div>
+														<div
+															class="w-3 h-3 bg-success rounded-full border-2 border-base-100"
+														></div>
 													</span>
 												{/if}
 											</div>
 											<div>
 												<div class="font-bold text-base flex items-center gap-2" title={url.host}>
 													{stripCID(url.hostname)}
-													<div class="badge badge-xs {format === 'subdomain' ? 'badge-success' : 'badge-warning'}">
+													<div
+														class="badge badge-xs {format === 'subdomain'
+															? 'badge-success'
+															: 'badge-warning'}"
+													>
 														{format === 'subdomain' ? '✓ SUB' : 'PATH'}
 													</div>
 												</div>

@@ -55,16 +55,23 @@
 <div class="min-h-screen bg-base-300 relative overflow-hidden">
 	<!-- Tech Background Pattern -->
 	<div class="absolute inset-0 opacity-5">
-		<div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 20px 20px;"></div>
+		<div
+			class="absolute inset-0"
+			style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 20px 20px;"
+		></div>
 	</div>
-	
+
 	<div class="relative z-10 container mx-auto px-4 py-16">
 		<div class="max-w-4xl mx-auto">
 			<!-- Terminal Header -->
 			<div class="mockup-code bg-base-100 shadow-2xl mb-8">
 				<pre data-prefix="$"><code class="text-success">ipfs gateway-checker --version</code></pre>
-				<pre data-prefix=">" class="text-warning"><code>IPFS Gateway Performance Analyzer v2.1.0</code></pre>
-				<pre data-prefix=">" class="text-info"><code>Testing framework for distributed storage gateways</code></pre>
+				<pre data-prefix=">" class="text-warning"><code
+						>IPFS Gateway Performance Analyzer v2.1.0</code
+					></pre>
+				<pre data-prefix=">" class="text-info"><code
+						>Testing framework for distributed storage gateways</code
+					></pre>
 			</div>
 
 			<div class="text-center mb-12">
@@ -74,7 +81,7 @@
 					</span>
 				</h1>
 				<p class="text-lg text-base-content/80 leading-relaxed max-w-3xl mx-auto">
-					Test and compare the performance of different IPFS gateways.<br>
+					Test and compare the performance of different IPFS gateways.<br />
 					See which gateways serve your content fastest.
 				</p>
 			</div>
@@ -88,13 +95,15 @@
 						<span class="w-3 h-3 bg-success rounded-full"></span>
 						<span class="font-mono text-sm text-base-content/60 ml-2">gateway-checker.sh</span>
 					</div>
-					
+
 					<div class="form-control">
 						<div class="flex items-center gap-2 mb-2">
 							<span class="text-sm text-base-content/70">Enter IPFS Content Identifier or URL</span>
 						</div>
 						<div class="join w-full">
-							<span class="bg-base-200 px-4 py-3 font-mono text-success border border-r-0 border-base-300 rounded-l-lg">
+							<span
+								class="bg-base-200 px-4 py-3 font-mono text-success border border-r-0 border-base-300 rounded-l-lg"
+							>
 								&gt;_
 							</span>
 							<input
@@ -126,9 +135,6 @@
 					</div>
 				</div>
 			</div>
-
-
-
 		</div>
 	</div>
 </div>

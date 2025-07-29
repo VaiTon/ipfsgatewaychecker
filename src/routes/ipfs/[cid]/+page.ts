@@ -9,7 +9,7 @@ const LOCAL_GATEWAY_URL = 'http://localhost:8080/ipfs/:hash';
 
 const templatesToURLs = (cid: CID, gateway: string, filename: string | null) => {
 	const urls: string[] = [];
-	
+
 	if (gateway.includes(':hash')) {
 		// Handle placeholder format (like localhost)
 		let newUrl = gateway.replace(':hash', cid.toString());
@@ -20,14 +20,14 @@ const templatesToURLs = (cid: CID, gateway: string, filename: string | null) => 
 	} else {
 		// Handle base URL format - test both subdomain and path formats
 		const url = new URL(gateway);
-		
+
 		// Format 1: Path format - domain/ipfs/cid
 		let pathUrl = gateway + '/ipfs/' + cid.toString();
 		if (filename != null) {
 			pathUrl += `?filename=${filename}`;
 		}
 		urls.push(pathUrl);
-		
+
 		// Format 2: Subdomain format - cid.ipfs.domain
 		let subdomainUrl = `${url.protocol}//${cid.toString()}.ipfs.${url.host}`;
 		if (filename != null) {
